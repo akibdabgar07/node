@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "fund": "^1.0.0",
+    "moment": "^2.29.4",
+    "mysql2": "^3.1.1",
+    "nodemon": "^2.0.20",
+    "prompt": "^1.3.0",
+    "random-city-name": "^1.0.2"
+  }
+}

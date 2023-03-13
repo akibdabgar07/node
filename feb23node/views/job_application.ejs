@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Applicaiton form</title>
+    <style>
+        body{
+            background-color: darkgray;
+        }
+        
+        #address2{
+            width:500px;
+        }
+        #address1{
+            width:500px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+       function validateForm() {
+  let x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+      
+       
+        let k = 1;
+        let j = 1;
+
+        
+          function new_Course(){
+        document.getElementById('Education_table').innerHTML+='<tr id="course_detail'+k+'"> <td><label for="course_name'+k+'">Name Of Course:- </label></td> <td> <select name="course_name" id="Course_Name'+k+'"> <%for(let i=0;i<course.length ;i++){%> <option value="<%=course[i]["option_value"]%>"><%=course[i]["option_value"] %></option> <%}%> </select> </td> <td><label for="boardname'+k+'">Name Of Board:</label></td> <td><select name="course_board" id="course_board'+k+'"> <%for(let i=0;i<board.length ;i++){%> <option value="<%=board[i]["option_value"]%>"><%=board[i]["option_value"] %></option> <%}%> </select> </td> <td><label for="passing_year'+k+'">Passing Year:- </label></td> <td><input type="text" id="passing_year'+k+'" placeholder="Enter passing year" name="passing_year"></td> <td><label for="percentage'+k+'">Percentage:</label></td> <td><input type="text" name="course_percentage" id="course_percentage'+k+'" placeholder="Percentage"></td> ';
+         k++;
+                }
+
+                
+               
+
+      
+       
+        function addWork() {
+            document.getElementById('add_work_experience_new').innerHTML += '<tr id="work_exp'+j+'"> <td><label for="company'+j+'">Company name:</label></td> <td><input type="text" name="company_name" id="company_name'+j+'" placeholder=" Enter Company Name"></td> <td><label for="desig'+j+'">Designation:</label></td> <td><input type="text" name="position" id="position'+j+'" placeholder="enter Designation"></td> <td><label for="ctc'+j+'">CTC:</label></td> <td><input type="text" name="ctc" id="ctc'+j+'" placeholder="ctc"></td> <td><label for="from'+j+'">From:</label></td> <td><input type="date" name="start_date" id="start_date'+j+'"></td> <td><label for="to'+j+'">To:</label></td> <td><input type="date" name="end_date" id="end_date'+j+'"></td> ';
+            j++;
+        }
+
+        async function getcities(state_name) { 
+    const url=await fetch('http://localhost:8085/city_name?state='+state_name); 
+    const data = await url.json(); 
+    console.log(data);                        
+    let city = document.getElementById('city');
+    city.innerHTML =""; 
+     for (let i = 0; i < data.length; i++) {
+         city.innerHTML +=`<option value="${data[i]['city_name']}">${data[i]['city_name']}</option>` } }
+    </script>
+
+<h3 style="text-align: center;">Job Applicatiom Form</h3>
+<hr>
+
+<form  action="/submit" name="myForm" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validateForm();">
+     <fieldset>
+        <table class="basic_tb">
+            <legend>Basic Detail</legend>
+    
+            <tr>
+                <td><label for="fname">First Name:- </label></td>
+                <td><input type="text" id="fname" name="fname"></td>
+            </tr>
+            <tr>
+                <td><label for="fname">Last Name:- </label></td>
+                <td><input type="text" id="lname" name="lname"></td>
+            </tr>
+            <tr>
+                <td><label for="Designation">Designation:- </label></td>
+                <td><input type="text" id="designation" name="designation"></td>
+            </tr>
+            <tr>
+                <td><label for="Email">Email: </label></td>
+                <td><input type="text" id="email" name="email"></td>
+            </tr>
+            <tr>
+                <td><label for="Pnum">Phone No:-</label></td>
+                <td><input type="text" id="content" name="contact"></td>
+            </tr>
+            <tr>
+                <td><label for="Gender">Gender: </label></td>
+                <td><input type="radio" name="gender" id="male" value="male"><label for="male">Male</label>
+                    <input type="radio" name="gender" id="female" value="female"><label for="female">Female</label>
+                    <input type="radio" name="gender" id="other" value="other"><label for="other">Other</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="RelationStatus">Relation Status</label></td>
+                <td>
+                    <select name="relationship_status" id="relationship_status">
+
+                        <%for(let i=0;i<relation.length ;i++){%>
+                               <option value="<%=relation[i]["option_value"]%>"><%=relation[i]["option_value"] %></option>
+                      <%}%>
+                 
+                    
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="address1">Address 1:-</label></td>
+                <td><input type="text" id="street1" name="street1"></td>
+            </tr>
+            <tr>        
+                <td><label for="address2">Address 2:-</label></td>
+                <td><input  type="text" id="street2" name="street2"></td>
+            </tr>
+
+            <tr>
+                <td><label for="city">City:- </label></td>
+                <td>
+                    <select id="city" name="city">
+                        <option></option>
+                    </select>
+                </td>
+               
+            </tr>
+            <tr>
+                <td><label for="state"> State:-</label></td>
+                <td>
+                    <select onchange="getcities(this.value)" name="state" id="state" > 
+                        <option value=""></option>
+                        <%for(let i=0;i<state.length ;i++){%>
+                            <option value="<%=state[i]["option_value"]%>"><%=state[i]["option_value"] %></option>
+                   <%}%>
+                        <!-- <option value="Rajshthan">Rajshthan</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="UP">UP</option> -->
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="Zip code">Zip code: </label></td>
+                <td><input type="text" id="zipcode" name="zipcode"></td>
+            </tr>
+            <tr>
+                <td><label for="Date Of Birth">Date Of Birth: </label></td>
+                <td><input type="date" id="dob" name="dob"></td>
+            </tr>
+           
+         </table>
+    </fieldset>
+
+    <fieldset>
+        
+            <legend>Education Detail </legend>
+            <table class="Education_table" style="width: 80%;" id="Education_table" name="Education_table">
+
+                <tr id="course_detail">
+                    <td><label for="course_name">Name Of Course:- </label></td>
+                    <td>
+                        <select name="course_name" id="Course_Name">
+                            
+                        <%for(let i=0;i<course.length ;i++){%>
+                            <option value="<%=course[i]["option_value"]%>"><%=course[i]["option_value"] %></option>
+                   <%}%>
+                        </select>
+                    </td>
+                    <td><label for="boardname">Name Of Board:</label></td>
+                    <td><select name="course_board" id="course_board">
+                        <%for(let i=0;i<board.length ;i++){%>
+                            <option value="<%=board[i]["option_value"]%>"><%=board[i]["option_value"] %></option>
+                   <%}%>
+                        </select>
+                    </td>
+                    <td><label for="passing_year">Passing Year:- </label></td>
+                    <td><input type="text" id="passing_year" placeholder="Enter passing year" name="passing_year"></td>
+                    <td><label for="percentage">Percentage:</label></td>
+                    <td><input type="text" name="course_percentage" id="course_percentage" placeholder="Percentage"></td>
+                    <td>
+                        <input type="button" value="+" id="newCourse" name="newCourse" onclick="new_Course()" /> &nbsp; Add New
+                        <input type="button" value="reset" id="remove_course" name="remove_course" onclick="resetCourse()" />
+                    </td>
+                </tr>
+                </table>
+            
+
+    </fieldset>
+    <fieldset>
+       
+            <legend>Work Experience:- </legend>
+            <table class="add_work_experience_new" style="width: 80%;" id="add_work_experience_new" name="add_work">
+                <tr id="work_exp">
+                    <td><label for="company">Company name:</label></td>
+                    <td><input type="text" name="company_name" id="company_name" placeholder=" Enter Company Name"></td>
+                    <td><label for="desig">Designation:</label></td>
+                    <td><input type="text" name="position" id="position" placeholder="enter Designation"></td>
+                    <td><label for="ctc">CTC:</label></td>
+                    <td><input type="text" name="ctc" id="ctc" placeholder="ctc"></td>
+                    <td><label for="from">From:</label></td>
+                    <td><input type="date" name="start_date" id="start_date"></td>
+                    <td><label for="to">To:</label></td>
+                    <td><input type="date" name="end_date" id="end_date"></td>
+                    <td>
+                        <input type="button" value="+" onclick="addWork()" />&nbsp; Add New
+                        <input type="button" value="reset" onclick="resetWork()" />
+                    </td>              
+                  </tr>
+            </table>
+
+    </fieldset>
+    <fieldset>
+       
+        <legend>Language Known:- </legend>
+        <table class="work_exp" style="width: 80%;" id="add_work" name="add_work">
+            
+            <%for(let i=0;i<language.length ;i++){%>
+            <tr>
+                <td><input type="checkbox" id="<%=language[i]["option_value"]%>" name="<%=language[i]["option_value"]%>" onclick="languages(this.id)"><label
+                        for="<%=language[i]["option_value"]%>"><%=language[i]["option_value"]%></label></td>
+                <td  id="English_known">
+                    <input type="checkbox" id="<%=language[i]["option_value"]%>r" name="<%=language[i]["option_value"]%>r"><label for="Englishr">Read</label>
+                    <input type="checkbox" id="<%=language[i]["option_value"]%>w" name="<%=language[i]["option_value"]%>w"><label for="Englishw">Write</label>
+                    <input type="checkbox" id="<%=language[i]["option_value"]%>s" name="<%=language[i]["option_value"]%>s"><label for="Englishs">Speak</label>
+                </td>
+            </tr>
+            <tr>
+                <%}%>   
+               
+    </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>Technologies Known:- </legend>
+        <table class="work_exp" style="width: 80%;" id="add_work" name="add_work">
+           
+            <%for(let i=0;i<techno.length ;i++){%>
+                <tr>
+            <tr>
+                <td><input type="checkbox" id="<%=techno[i]["option_value"]%>" name="<%=techno[i]["option_value"]%>" onclick="technologies(this.id)"><label
+                        for="<%=techno[i]["option_value"]%>"><%=techno[i]["option_value"]%></label></td>
+                <td  id="mysql_level" name='mysql_level'>
+                    <input type="radio" id="<%=techno[i]["option_value"]%>b" name="<%=techno[i]["option_value"]%>r" value="Beginer"><label for="mysqlb">Beginer</label>
+                    <input type="radio" id="<%=techno[i]["option_value"]%>m" name="<%=techno[i]["option_value"]%>r"  value="Mediator"><label for="mysqlm">Mediator</label>
+                    <input type="radio" id="<%=techno[i]["option_value"]%>e" name="<%=techno[i]["option_value"]%>r" value="Expert"><label for="mysqle">Expert</label>
+                </td>
+            </tr>
+            <%}%>
+          
+        </table>
+        
+    </fieldset>
+    <fieldset>
+        <legend>Preferances:- </legend>
+        <table class="preferred" style="width: 80%;" id="preferred" name="preferred">
+           
+            <tr>
+                <td><label for="location">Preferd location:</label></td>
+                <td><select name="location" id="location" multiple="multiple">
+                    <%for(let i=0;i<prefered.length ;i++){%>
+                        <option value="<%=prefered[i]["option_value"]%>"><%=prefered[i]["option_value"] %></option>
+               <%}%>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="Notice">Notice Period:</label></td>
+                <td><input type="text" name="Notice" id="Notice" placeholder="enter notice period"></td>
+                <td><label for="CTC1">Expected CTC:</label></td>
+                <td><input type="text" name="CTC1" id="CTC1" placeholder="CTC"></td>
+                <td><label for="CTC2">Current CTC:</label></td>
+                <td><input type="text" name="CTC2" id="CTC2" placeholder="CTC"></td>
+            </tr>
+            <tr>
+                <td><label for="dept">Department:-</label></td>
+                <td><select name="dept" id="dept">
+                    <%for(let i=0;i<deptartment.length ;i++){%>
+                        <option value="<%=deptartment[i]["option_value"]%>"><%=deptartment[i]["option_value"] %></option>
+               <%}%>
+                    </select>
+                </td>
+            </tr>
+            
+        </table>
+
+        </table>
+    </fieldset>
+
+    <fieldset>
+         <legend>Reference:-</legend>
+        <table class="Referance" style="width: 80%;" id="ref" name="Referance">
+            <tr>
+                <td><label for="ref1">Name:</label></td>
+                <td><input type="text" name="ref1" id="ref1" placeholder=" Reference Name"></td>
+                <td><label for="rcontact">Contact:</label></td>
+                <td><input type="text" name="rcontact1" id="rcontact1" placeholder="Contact"></td>
+                <td><label for="Relation">Relation:</label></td>
+                <td><input type="text" name="Relation1" id="Relation1" placeholder="Realtion"></td>
+            </tr>
+         
+            <tr>
+                <td><label for="ref2">Name:</label></td>
+                <td><input type="text" name="ref2" id="ref2" placeholder=" Reference Name"></td>
+                <td><label for="rcontact">Contact:</label></td>
+                <td><input type="text" name="rcontact2" id="rcontact2" placeholder="Contact"></td>
+                <td><label for="Relation">Relation:</label></td>
+                <td><input type="text" name="Relation2" id="Relation2" placeholder="Realtion"></td>
+            </tr>
+            <!-- <tr>
+                <td><label for="ref3">Name:</label></td>
+                <td><input type="text" name="ref3" id="ref3" placeholder=" Reference Name"></td>
+                <td><label for="rcontact">Contact:</label></td>
+                <td><input type="text" name="rcontact" id="rcontact" placeholder="Contact"></td>
+                <td><label for="Relation">Relation:</label></td>
+                <td><input type="text" name="Relation" id="Relation" placeholder="Realtion"></td>
+            </tr> -->
+
+        </table>
+       
+    </fieldset>
+    <div style="text-align: center;">
+        <input type="submit" value="submit" name="submit" id="submit" />
+    </div>
+</form>
+    
+</body>
+</html>

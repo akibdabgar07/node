@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+</head>
+
+<body style="border: 1;">
+    <script>
+        async function delete1(getid) {
+
+            if (confirm("are you sure want to delete")) {
+                const url = await fetch('http://localhost:8085/deleted?del=' + getid)
+
+                console.log(url);
+
+            } else {
+                console.log('no');
+            }
+        }
+
+        async function checkedAll() {
+
+            let akib_chkbox= document.getElementsByName('check');
+            for (let akib_i = 0; akib_i < akib_chkbox.length; akib_i++) {
+                console.log(akib_chkbox[akib_i].checked);
+                console.log(akib_chkbox[akib_i].id);
+                if (akib_chkbox[akib_i].checked) {
+                    const url = await fetch('http://localhost:8085/deleted?del=' +akib_chkbox[akib_i].id )
+                }
+            }
+        }
+    </script>
+    <form action="/job" method="get">
+        <input type="text" name="searching" placeholder="search" value="<%=searching%>">
+        <!-- <input type="button" name="and" value="AND" >
+        <input type="button" name="or" value="OR" > -->
+        <input type="hidden" name="and" value="and">
+        <input type="hidden" name="or" value="or">
+
+        <select name="data" id="data">
+            <option name="and" value="and">and</option>
+            <option name="or" value="or">or</option>
+        </select>
+        <input type="submit" value="search" />
+
+
+
+    </form>
+
+    <div style="background-color:aliceblue;" class="table-data">
+        <table class="data" align="center" border="1">
+            <tr>
+                <th>fname</th>
+                <th>lname</th>
+                <th>designation</th>
+                <th>city</th>
+                <th>email </th>
+                <th>gender </th>
+                <th>dob </th>
+                <th>State </th>
+
+            </tr>
+            <tr>
+                <td>^</td>
+                <td>*</td>
+                <td>$</td>
+                <td>+</td>
+                <td>!</td>
+                <td>#</td>
+                <td>%</td>
+                <td>~</td>
+
+            </tr>
+        </table>
+
+        <table class="data" align="center" border="1">
+            <tr>
+                <td>checked</td>
+                <th>c_id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Contact</th>
+                <th>Designation</th>
+                <th>Email</th>
+                <th>Gender </th>
+                <th>Date of Birth </th>
+                <th>Relationship status </th>
+                <th>Street1 </th>
+                <th>street2 </th>
+                <th>City </th>
+                <th>State </th>
+                <th> Zipcode </th>
+                <th>Created date</th>
+                <th>delete</th>
+
+
+            </tr>
+            <% for(var i=0; i < data.length; i++) { %>
+                <tr>
+                    <td><input type="checkbox" id="<%= data[i]["c_id"] %>" name="check" ></td>
+                    <td>
+                        <%= data[i]["c_id"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["fname"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["lname"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["contact"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["designation"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["email"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["gender"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["dob"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["relationship_status"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["street1"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["street2"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["city"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["state"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["zipcode"] %>
+                    </td>
+                    <td>
+                        <%= data[i]["created_date"] %>
+                    </td>
+                    <td>
+
+                        <p style="color: brown;" name="del" onclick="delete1(this.id)" id="<%= data[i]["c_id"] %>"
+                            value="<%= data[i]["c_id"] %>">delete</p>
+                    </td>
+                    <td>
+                        <a name="edited" href="http://localhost:8085/editdata?edited=<%=data[i]["c_id"]%>">EDIT</a>
+                       
+                    </td>
+                </tr>
+                <% } %>
+
+
+                    </tr>
+                   
+        </table>
+        <p name="check" style="cursor: pointer; text-align:center; width: 200px; position:absolute; left:800px;  border-style: double; " id="check" onclick="checkedAll()">Delete Checked Data</p>
+
+    </div>
+
+    <script>
+        AND = () => {
+
+            document.getElementById("AND")
+
+
+        }
+    </script>
+</body>
+
+</html>
